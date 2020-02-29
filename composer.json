@@ -1,0 +1,19 @@
+{
+    "name": "snappmarket/treasury-communicator",
+    "authors": [
+        {
+            "name": "EmiTis Yousefi",
+            "email": "emitis89@gmail.com"
+        }
+    ],
+    "require": {
+        "snappmarket/php-rest-communicator": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "SnappMarket\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false
+}
