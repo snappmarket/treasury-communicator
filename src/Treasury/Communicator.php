@@ -3,10 +3,17 @@
 
 namespace SnappMarket\Treasury;
 
-use SnappMarket\Communicator\Communicator as BasicCommuncator;
+use SnappMarket\Communicator\Communicator as BasicCommunicator;
 
 
-class Communicator extends BasicCommuncator
+class Communicator extends BasicCommunicator
 {
-    // todo: to be filled with specific methods for the treasury service
+    public function createOrderTransactions(int $orderId, string $paymentType, int $creatorId)
+    {
+        $this->post("api/transaction", [
+            'order_id' => $orderId,
+            'payment_type' => $paymentType,
+            'creator_id' => $creatorId
+        ]);
+    }
 }
