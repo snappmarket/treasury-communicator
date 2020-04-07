@@ -51,7 +51,7 @@ class OrderUpdateDto
 
     public function setNewDeliveryFee(?int $value)
     {
-        $this->newDeliveryFee;
+        $this->newDeliveryFee = $value;
 
         return $this;
     }
