@@ -4,6 +4,7 @@
 namespace SnappMarket\Treasury;
 
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
+use SnappMarket\Treasury\Dto\OrderUpdateDto;
 
 
 class Communicator extends BasicCommunicator
@@ -15,6 +16,20 @@ class Communicator extends BasicCommunicator
             'payment_type' => $paymentType,
             'creator_id' => $creatorId,
             'payment_id' => $paymentId
+        ]);
+
+        return $response->getStatusCode() == 200;
+    }
+
+
+
+    public function storeOrderUpdate(OrderUpdateDto $orderUpdateDto)
+    {
+        $uri = 'api/orders/' . $orderUpdateDto->getOrderId() . '/updates';
+
+        $response = $this->post($uri, [
+             'creator_id'       => $orderUpdateDto->getCreatorId(),
+             'new_delivery_fee' => $orderUpdateDto->getNewDeliveryFee(),
         ]);
 
         return $response->getStatusCode() == 200;
