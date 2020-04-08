@@ -13,7 +13,7 @@ class OrderUpdateDto
     private $creatorId;
 
     /** @var int|null */
-    private $newDeliveryFee;
+    private $oldDeliveryFee;
 
 
 
@@ -49,17 +49,17 @@ class OrderUpdateDto
 
 
 
-    public function setNewDeliveryFee(?int $value)
+    public function setOldDeliveryFee(?int $value)
     {
-        $this->newDeliveryFee = $value;
+        $this->oldDeliveryFee = $value;
 
         return $this;
     }
 
 
 
-    public function getNewDeliveryFee()
+    public function getOldDeliveryFee()
     {
-        return $this->newDeliveryFee;
+        return $this->oldDeliveryFee;
     }
 }
