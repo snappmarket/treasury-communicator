@@ -4,6 +4,7 @@
 namespace SnappMarket\Treasury;
 
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
+use SnappMarket\Treasury\Dto\CreditUpdateDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 
 
@@ -32,6 +33,18 @@ class Communicator extends BasicCommunicator
              'old_delivery_fee' => $orderUpdateDto->getOldDeliveryFee(),
         ]);
 
+        return $response->getStatusCode() == 200;
+    }
+
+    public function storeCreditUpdate(CreditUpdateDto $creditUpdateDto)
+    {
+        $uri = 'api/credit/' . $creditUpdateDto->getUserId() . '/updates';
+        $response = $this->post($uri, [
+           'creator_id' => $creditUpdateDto->getCreatorId(),
+           'delta_value' => $creditUpdateDto->getDeltaValue(),
+           'wallet_type' => $creditUpdateDto->getWalletType(),
+           'comment' => $creditUpdateDto->getComment()
+        ]);
         return $response->getStatusCode() == 200;
     }
 }
