@@ -29,8 +29,9 @@ class Communicator extends BasicCommunicator
         $uri = 'api/orders/' . $orderUpdateDto->getOrderId() . '/updates';
 
         $response = $this->post($uri, [
-             'creator_id'       => $orderUpdateDto->getCreatorId(),
-             'old_delivery_fee' => $orderUpdateDto->getOldDeliveryFee(),
+             'creator_id'         => $orderUpdateDto->getCreatorId(),
+             'old_delivery_fee'   => $orderUpdateDto->getOldDeliveryFee(),
+             'old_products_price' => $orderUpdateDto->getOldProductsPrice(),
         ]);
 
         return $response->getStatusCode() == 200;
