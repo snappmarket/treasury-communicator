@@ -15,6 +15,9 @@ class OrderUpdateDto
     /** @var int|null */
     private $oldDeliveryFee;
 
+    /** @var int|null */
+    private $oldProductsPrice;
+
 
 
     public function setOrderId(int $value)
@@ -61,5 +64,21 @@ class OrderUpdateDto
     public function getOldDeliveryFee()
     {
         return $this->oldDeliveryFee;
+    }
+
+
+
+    public function setOldProductsPrice(?int $value)
+    {
+        $this->oldProductsPrice = $value;
+
+        return $this;
+    }
+
+
+
+    public function getOldProductsPrice()
+    {
+        return $this->oldProductsPrice;
     }
 }
