@@ -18,6 +18,9 @@ class OrderUpdateDto
     /** @var int|null */
     private $oldProductsPrice;
 
+    /** @var int|null */
+    private $oldVoucherPrice;
+
 
 
     public function setOrderId(int $value)
@@ -80,5 +83,21 @@ class OrderUpdateDto
     public function getOldProductsPrice()
     {
         return $this->oldProductsPrice;
+    }
+
+
+
+    public function setOldVoucherPrice(?int $value)
+    {
+        $this->oldVoucherPrice = $value;
+
+        return $this;
+    }
+
+
+
+    public function getOldVoucherPrice()
+    {
+        return $this->oldVoucherPrice;
     }
 }

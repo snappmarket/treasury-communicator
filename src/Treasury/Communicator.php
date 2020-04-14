@@ -32,6 +32,7 @@ class Communicator extends BasicCommunicator
              'creator_id'         => $orderUpdateDto->getCreatorId(),
              'old_delivery_fee'   => $orderUpdateDto->getOldDeliveryFee(),
              'old_products_price' => $orderUpdateDto->getOldProductsPrice(),
+             'old_voucher_price'  => $orderUpdateDto->getOldVoucherPrice(),
         ]);
 
         return $response->getStatusCode() == 200;
