@@ -5,6 +5,7 @@ namespace SnappMarket\Treasury;
 
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
+use SnappMarket\Treasury\Dto\OrderCancelDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 
 
@@ -33,6 +34,17 @@ class Communicator extends BasicCommunicator
              'old_delivery_fee'   => $orderUpdateDto->getOldDeliveryFee(),
              'old_products_price' => $orderUpdateDto->getOldProductsPrice(),
              'old_voucher_price'  => $orderUpdateDto->getOldVoucherPrice(),
+        ]);
+
+        return $response->getStatusCode() == 200;
+    }
+
+    public function storeOrderCancel(OrderCancelDto $orderCancelDto)
+    {
+        $uri = 'api/orders/' . $orderCancelDto->getOrderId() . '/cancel';
+
+        $response = $this->post($uri, [
+            'creator_id'         => $orderCancelDto->getCreatorId(),
         ]);
 
         return $response->getStatusCode() == 200;
