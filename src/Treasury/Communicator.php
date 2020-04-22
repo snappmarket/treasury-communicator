@@ -4,6 +4,7 @@
 namespace SnappMarket\Treasury;
 
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
+use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
 use SnappMarket\Treasury\Dto\OrderPayDto;
@@ -14,7 +15,7 @@ class Communicator extends BasicCommunicator
 {
     public function storeOrderUpdate(OrderUpdateDto $orderUpdateDto)
     {
-        $uri = 'api/orders/' . $orderUpdateDto->getOrderId() . '/updates';
+        $uri = 'api/v1/orders/' . $orderUpdateDto->getOrderId() . '/updates';
 
         $response = $this->post($uri, [
              'creator_id'         => $orderUpdateDto->getCreatorId(),
@@ -30,7 +31,7 @@ class Communicator extends BasicCommunicator
 
     public function storeOrderCancel(OrderCancelDto $orderCancelDto)
     {
-        $uri = 'api/orders/' . $orderCancelDto->getOrderId() . '/cancel';
+        $uri = 'api/v1/orders/' . $orderCancelDto->getOrderId() . '/cancel';
 
         $response = $this->post($uri, [
              'creator_id' => $orderCancelDto->getCreatorId(),
@@ -43,7 +44,7 @@ class Communicator extends BasicCommunicator
 
     public function storeCreditUpdate(CreditUpdateDto $creditUpdateDto)
     {
-        $uri      = 'api/credit/' . $creditUpdateDto->getUserId() . '/updates';
+        $uri      = 'api/v1/credit/' . $creditUpdateDto->getUserId() . '/updates';
         $response = $this->post($uri, [
              'creator_id'  => $creditUpdateDto->getCreatorId(),
              'delta_value' => $creditUpdateDto->getDeltaValue(),
@@ -53,11 +54,21 @@ class Communicator extends BasicCommunicator
         return $response->getStatusCode() == 200;
     }
 
+    public function storeCreditIncrease(CreditIncreaseDto $creditIncreaseDto)
+    {
+        $uri      = 'api/v1/credit/' . $creditIncreaseDto->getUserId() . '/increase';
+        $response = $this->post($uri, [
+            'value' => $creditIncreaseDto->getValue(),
+            'payment_id' => $creditIncreaseDto->getPaymentId(),
+        ]);
+        return $response->getStatusCode() == 200;
+    }
+
 
 
     public function storeOrderPayment(OrderPayDto $orderPayDto): bool
     {
-        $response = $this->request('put', 'api/transaction', [
+        $response = $this->request('put', 'api/v1/transaction', [
              'order_id'     => $orderPayDto->getOrderId(),
              'payment_type' => $orderPayDto->getPaymentType(),
              'creator_id'   => $orderPayDto->getCreatorId(),
