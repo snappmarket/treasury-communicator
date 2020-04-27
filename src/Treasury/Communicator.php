@@ -6,8 +6,10 @@ namespace SnappMarket\Treasury;
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
 use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
+use SnappMarket\Treasury\Dto\OrderCancelCreditReservationDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
 use SnappMarket\Treasury\Dto\OrderPayDto;
+use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 
 
@@ -76,5 +78,37 @@ class Communicator extends BasicCommunicator
         ]);
 
         return $response->getStatusCode() == 200;
+    }
+
+
+
+    public function reserveCreditForOrder(OrderReserveCreditDto $reserveCreditDto): int
+    {
+        $uri      = 'api/v1/orders/' . $reserveCreditDto->getOrderId() . '/credit-reservations';
+        $response = $this->post($uri, [
+             'creator_id'   => $reserveCreditDto->getCreatorId(),
+             'payment_type' => $reserveCreditDto->getPaymentType(),
+        ]);
+
+        $responseContent = $response->getBody()->getContents();
+        $responseArray = json_decode($responseContent, true);
+
+        return $responseArray['metadata']['reserved_amount'];
+    }
+
+
+
+    public function cancelCreditReservationForOrder(OrderCancelCreditReservationDto $cancelCreditReservationDto): int
+    {
+        $uri      = 'api/v1/orders/' . $cancelCreditReservationDto->getOrderId() . '/credit-reservation-cancellations';
+        $response = $this->post($uri, [
+             'creator_id'   => $cancelCreditReservationDto->getCreatorId(),
+             'payment_type' => $cancelCreditReservationDto->getPaymentType(),
+        ]);
+
+        $responseContent = $response->getBody()->getContents();
+        $responseArray = json_decode($responseContent, true);
+
+        return $responseArray['metadata']['freed_amount'];
     }
 }
