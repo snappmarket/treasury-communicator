@@ -6,6 +6,7 @@ namespace SnappMarket\Treasury;
 use Psr\Log\LoggerInterface;
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
 use SnappMarket\Treasury\Dto\CreditIncreaseDto;
+use SnappMarket\Treasury\Dto\CreditPayBackDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
 use SnappMarket\Treasury\Dto\OrderCancelCreditReservationDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
@@ -83,7 +84,15 @@ class Communicator extends BasicCommunicator
         return $response->getStatusCode() == 200;
     }
 
-
+    public function storeCreditPayBack(CreditPayBackDto $creditPayBackDto)
+    {
+        $uri      = 'api/v1/credit/' . $creditPayBackDto->getUserId() . '/payback';
+        $response = $this->post($uri, [
+            'value' => $creditPayBackDto->getValue(),
+            'creator_id' => $creditPayBackDto->getCreatorId(),
+        ]);
+        return $response->getStatusCode() == 200;
+    }
 
     public function storeOrderPayment(OrderPayDto $orderPayDto): bool
     {
