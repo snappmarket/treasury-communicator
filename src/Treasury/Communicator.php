@@ -3,6 +3,7 @@
 
 namespace SnappMarket\Treasury;
 
+use Psr\Log\LoggerInterface;
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
 use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
@@ -12,9 +13,25 @@ use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 
-
 class Communicator extends BasicCommunicator
 {
+    const SECURITY_TOKEN_HEADER = 'Service-Security';
+
+
+
+    public function __construct(
+         string $baseUri,
+         array $headers = [],
+         string $securityToken,
+         ?LoggerInterface $logger = null
+    ) {
+        $headers[static::SECURITY_TOKEN_HEADER] = $securityToken;
+
+        parent::__construct($baseUri, $headers, $logger);
+    }
+
+
+
     public function storeOrderUpdate(OrderUpdateDto $orderUpdateDto)
     {
         $uri = 'api/v1/orders/' . $orderUpdateDto->getOrderId() . '/updates';
@@ -60,8 +77,8 @@ class Communicator extends BasicCommunicator
     {
         $uri      = 'api/v1/credit/' . $creditIncreaseDto->getUserId() . '/increase';
         $response = $this->post($uri, [
-            'value' => $creditIncreaseDto->getValue(),
-            'payment_id' => $creditIncreaseDto->getPaymentId(),
+             'value' => $creditIncreaseDto->getValue(),
+             'payment_id' => $creditIncreaseDto->getPaymentId(),
         ]);
         return $response->getStatusCode() == 200;
     }
@@ -90,7 +107,7 @@ class Communicator extends BasicCommunicator
              'payment_type' => $reserveCreditDto->getPaymentType(),
         ]);
 
-        $responseContent = $response->getBody()->getContents();
+        $responseContent = $response->getBody()->__toString();
         $responseArray = json_decode($responseContent, true);
 
         return $responseArray['metadata']['reserved_amount'];
@@ -106,7 +123,7 @@ class Communicator extends BasicCommunicator
              'payment_type' => $cancelCreditReservationDto->getPaymentType(),
         ]);
 
-        $responseContent = $response->getBody()->getContents();
+        $responseContent = $response->getBody()->__toString();
         $responseArray = json_decode($responseContent, true);
 
         return $responseArray['metadata']['freed_amount'];
