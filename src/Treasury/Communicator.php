@@ -77,8 +77,8 @@ class Communicator extends BasicCommunicator
     {
         $uri      = 'api/v1/credit/' . $creditIncreaseDto->getUserId() . '/increase';
         $response = $this->post($uri, [
-            'value' => $creditIncreaseDto->getValue(),
-            'payment_id' => $creditIncreaseDto->getPaymentId(),
+             'value' => $creditIncreaseDto->getValue(),
+             'payment_id' => $creditIncreaseDto->getPaymentId(),
         ]);
         return $response->getStatusCode() == 200;
     }
@@ -107,7 +107,7 @@ class Communicator extends BasicCommunicator
              'payment_type' => $reserveCreditDto->getPaymentType(),
         ]);
 
-        $responseContent = $response->getBody()->getContents();
+        $responseContent = $response->getBody()->__toString();
         $responseArray = json_decode($responseContent, true);
 
         return $responseArray['metadata']['reserved_amount'];
@@ -123,7 +123,7 @@ class Communicator extends BasicCommunicator
              'payment_type' => $cancelCreditReservationDto->getPaymentType(),
         ]);
 
-        $responseContent = $response->getBody()->getContents();
+        $responseContent = $response->getBody()->__toString();
         $responseArray = json_decode($responseContent, true);
 
         return $responseArray['metadata']['freed_amount'];
