@@ -9,6 +9,7 @@ use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
 use SnappMarket\Treasury\Dto\OrderCancelCreditReservationDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
+use SnappMarket\Treasury\Dto\OrderCashBackDto;
 use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
@@ -73,11 +74,13 @@ class Communicator extends BasicCommunicator
         return $response->getStatusCode() == 200;
     }
 
+
+
     public function storeCreditIncrease(CreditIncreaseDto $creditIncreaseDto)
     {
         $uri      = 'api/v1/credit/' . $creditIncreaseDto->getUserId() . '/increase';
         $response = $this->post($uri, [
-             'value' => $creditIncreaseDto->getValue(),
+             'value'      => $creditIncreaseDto->getValue(),
              'payment_id' => $creditIncreaseDto->getPaymentId(),
         ]);
         return $response->getStatusCode() == 200;
@@ -108,7 +111,7 @@ class Communicator extends BasicCommunicator
         ]);
 
         $responseContent = $response->getBody()->__toString();
-        $responseArray = json_decode($responseContent, true);
+        $responseArray   = json_decode($responseContent, true);
 
         return $responseArray['metadata']['reserved_amount'];
     }
@@ -124,8 +127,23 @@ class Communicator extends BasicCommunicator
         ]);
 
         $responseContent = $response->getBody()->__toString();
-        $responseArray = json_decode($responseContent, true);
+        $responseArray   = json_decode($responseContent, true);
 
         return $responseArray['metadata']['freed_amount'];
+    }
+
+
+
+    public function storeCashBackTransactions(OrderCashBackDto $cashBackDto): int
+    {
+        $uri      = 'api/v1/orders/' . $cashBackDto->getOrderId() . '/cash-backs/' . $cashBackDto->getVoucherId();
+        $response = $this->post($uri, [
+             'creator_id' => $cashBackDto->getCreatorId(),
+        ]);
+
+        $responseContent = $response->getBody()->__toString();
+        $responseArray   = json_decode($responseContent, true);
+
+        return $responseArray['metadata']['added_amount'];
     }
 }
