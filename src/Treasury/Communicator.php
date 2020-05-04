@@ -132,8 +132,6 @@ class Communicator extends BasicCommunicator
         return $responseArray['metadata']['freed_amount'];
     }
 
-
-
     public function storeCashBackTransactions(OrderCashBackDto $cashBackDto): int
     {
         $uri      = 'api/v1/orders/' . $cashBackDto->getOrderId() . '/cash-backs/' . $cashBackDto->getVoucherId();
@@ -145,5 +143,28 @@ class Communicator extends BasicCommunicator
         $responseArray   = json_decode($responseContent, true);
 
         return $responseArray['metadata']['added_amount'];
+    }
+
+    public function getTransactionList(transactionListDto $transactionListDto)
+    {
+        $uri = 'api/v1/transaction/' . $transactionListDto->getUserId();
+
+        $response = $this->get($uri, [
+            'per_page' => $transactionListDto->getPerPage() ?: "",
+            'page' => $transactionListDto->getPage() ?: "",
+            'transaction_id' => $transactionListDto->getTransactionId() ?: "",
+            '_from' => $transactionListDto->getFrom() ?: "",
+            '_to' => $transactionListDto->getTo() ?: "",
+            'value' => $transactionListDto->getValue() ?: "",
+            'reason' => $transactionListDto->getReason() ?: "",
+            'invoice_id' => $transactionListDto->getInvoiceId() ?: "",
+            'support_agent_phone' => $transactionListDto->getSupportAgentPhone() ?: "",
+            'comment' => $transactionListDto->getComment() ?: "",
+        ]);
+
+        $responseContent = $response->getBody()->__toString();
+        $responseArray = json_decode($responseContent, true);
+
+        return $responseArray;
     }
 }
