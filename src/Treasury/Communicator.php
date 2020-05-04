@@ -13,6 +13,7 @@ use SnappMarket\Treasury\Dto\OrderCashBackDto;
 use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
+use SnappMarket\Treasury\Dto\transactionListDto;
 
 class Communicator extends BasicCommunicator
 {
