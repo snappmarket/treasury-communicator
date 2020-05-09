@@ -168,4 +168,30 @@ class Communicator extends BasicCommunicator
 
         return $responseArray;
     }
+
+    public function getTransactionReasons()
+    {
+        $uri = 'api/v1/transaction/reasons';
+
+        $response = $this->get($uri, [
+        ]);
+
+        $responseContent = $response->getBody()->__toString();
+        $responseArray = json_decode($responseContent, true);
+
+        return $responseArray;
+    }
+
+    public function getTransactionMembers()
+    {
+        $uri = 'api/v1/transaction/members';
+
+        $response = $this->get($uri, [
+        ]);
+
+        $responseContent = $response->getBody()->__toString();
+        $responseArray = json_decode($responseContent, true);
+
+        return $responseArray;
+    }
 }
