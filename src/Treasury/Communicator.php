@@ -13,7 +13,7 @@ use SnappMarket\Treasury\Dto\OrderCashBackDto;
 use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
-use SnappMarket\Treasury\Dto\transactionListDto;
+use SnappMarket\Treasury\Dto\TransactionListDto;
 
 class Communicator extends BasicCommunicator
 {
@@ -146,7 +146,7 @@ class Communicator extends BasicCommunicator
         return $responseArray['metadata']['added_amount'];
     }
 
-    public function getTransactionList(transactionListDto $transactionListDto)
+    public function getTransactionList(TransactionListDto $transactionListDto)
     {
         $uri = 'api/v1/transaction/' . $transactionListDto->getUserId();
 

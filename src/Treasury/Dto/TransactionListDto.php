@@ -9,7 +9,7 @@
 namespace SnappMarket\Treasury\Dto;
 
 
-class transactionListDto
+class TransactionListDto
 {
     /** @var int|null */
     private $userId;
