@@ -100,11 +100,10 @@ class Communicator extends BasicCommunicator
 
     public function storeOrderPayment(OrderPayDto $orderPayDto): bool
     {
-        $response = $this->request('put', 'api/v1/transaction', [
-             'order_id'     => $orderPayDto->getOrderId(),
+        $uri      = "api/v1/orders/{$orderPayDto->getOrderId()}/payments/{$orderPayDto->getPaymentId()}";
+        $response = $this->request('put', $uri, [
              'payment_type' => $orderPayDto->getPaymentType(),
              'creator_id'   => $orderPayDto->getCreatorId(),
-             'payment_id'   => $orderPayDto->getPaymentId(),
         ]);
 
         return $response->getStatusCode() == 200;
