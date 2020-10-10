@@ -55,7 +55,7 @@ class Communicator extends BasicCommunicator
     {
         $uri = 'api/v1/orders/' . $orderCancelDto->getOrderId() . '/cancel';
 
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
              'creator_id' => $orderCancelDto->getCreatorId(),
         ]);
 
@@ -67,7 +67,7 @@ class Communicator extends BasicCommunicator
     public function storeCreditUpdate(CreditUpdateDto $creditUpdateDto)
     {
         $uri      = 'api/v1/credit/' . $creditUpdateDto->getUserId() . '/updates';
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
              'creator_id'  => $creditUpdateDto->getCreatorId(),
              'delta_value' => $creditUpdateDto->getDeltaValue(),
              'wallet_type' => $creditUpdateDto->getWalletType(),
@@ -81,7 +81,7 @@ class Communicator extends BasicCommunicator
     public function storeCreditIncrease(CreditIncreaseDto $creditIncreaseDto)
     {
         $uri      = 'api/v1/credit/' . $creditIncreaseDto->getUserId() . '/increase';
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
              'value'      => $creditIncreaseDto->getValue(),
              'payment_id' => $creditIncreaseDto->getPaymentId(),
         ]);
@@ -91,7 +91,7 @@ class Communicator extends BasicCommunicator
     public function storeCreditPayBack(CreditPayBackDto $creditPayBackDto)
     {
         $uri      = 'api/v1/credit/' . $creditPayBackDto->getUserId() . '/payback';
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
             'value' => $creditPayBackDto->getValue(),
             'creator_id' => $creditPayBackDto->getCreatorId(),
         ]);
@@ -114,7 +114,7 @@ class Communicator extends BasicCommunicator
     public function reserveCreditForOrder(OrderReserveCreditDto $reserveCreditDto): int
     {
         $uri      = 'api/v1/orders/' . $reserveCreditDto->getOrderId() . '/credit-reservations';
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
              'creator_id'   => $reserveCreditDto->getCreatorId(),
              'payment_type' => $reserveCreditDto->getPaymentType(),
         ]);
@@ -130,7 +130,7 @@ class Communicator extends BasicCommunicator
     public function cancelCreditReservationForOrder(OrderCancelCreditReservationDto $cancelCreditReservationDto): int
     {
         $uri      = 'api/v1/orders/' . $cancelCreditReservationDto->getOrderId() . '/credit-reservation-cancellations';
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
              'creator_id'   => $cancelCreditReservationDto->getCreatorId(),
              'payment_type' => $cancelCreditReservationDto->getPaymentType(),
         ]);
@@ -144,7 +144,7 @@ class Communicator extends BasicCommunicator
     public function storeCashBackTransactions(OrderCashBackDto $cashBackDto): int
     {
         $uri      = 'api/v1/orders/' . $cashBackDto->getOrderId() . '/cash-backs/' . $cashBackDto->getVoucherId();
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
              'creator_id' => $cashBackDto->getCreatorId(),
         ]);
 
