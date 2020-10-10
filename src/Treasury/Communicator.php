@@ -158,7 +158,7 @@ class Communicator extends BasicCommunicator
     {
         $uri = 'api/v1/transaction/' . $transactionListDto->getUserId();
 
-        $response = $this->get($uri, [
+        $response = $this->request(static::METHOD_GET, $uri, [
             'per_page' => $transactionListDto->getPerPage() ?: "",
             'page' => $transactionListDto->getPage() ?: "",
             'transaction_id' => $transactionListDto->getTransactionId() ?: "",
@@ -181,7 +181,7 @@ class Communicator extends BasicCommunicator
     {
         $uri = 'api/v1/transaction/reasons';
 
-        $response = $this->get($uri, [
+        $response = $this->request(static::METHOD_GET, $uri, [
         ]);
 
         $responseContent = $response->getBody()->__toString();
@@ -194,7 +194,7 @@ class Communicator extends BasicCommunicator
     {
         $uri = 'api/v1/transaction/members';
 
-        $response = $this->get($uri, [
+        $response = $this->request(static::METHOD_GET, $uri, [
         ]);
 
         $responseContent = $response->getBody()->__toString();
