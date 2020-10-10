@@ -39,7 +39,7 @@ class Communicator extends BasicCommunicator
     {
         $uri = 'api/v1/orders/' . $orderUpdateDto->getOrderId() . '/updates';
 
-        $response = $this->post($uri, [
+        $response = $this->request(static::METHOD_POST, $uri, [
              'creator_id'         => $orderUpdateDto->getCreatorId(),
              'old_delivery_fee'   => $orderUpdateDto->getOldDeliveryFee(),
              'old_products_price' => $orderUpdateDto->getOldProductsPrice(),
