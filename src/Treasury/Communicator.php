@@ -5,6 +5,7 @@ namespace SnappMarket\Treasury;
 
 use Psr\Log\LoggerInterface;
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
+use SnappMarket\Treasury\Dto\CheckOrderPaymentDto;
 use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditPayBackDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
@@ -15,6 +16,7 @@ use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
+use SnappMarket\Treasury\Results\CheckOrderPaymentResult;
 
 class Communicator extends BasicCommunicator
 {
@@ -107,6 +109,29 @@ class Communicator extends BasicCommunicator
         ]);
 
         return $response->getStatusCode() == 200;
+    }
+
+
+
+    public function checkOrderPayment(CheckOrderPaymentDto $orderPayDto): CheckOrderPaymentResult
+    {
+        $uri      = "api/v1/orders/{$orderPayDto->getOrderId()}/payments/{$orderPayDto->getPaymentId()}/possibility";
+        $response = $this->request(
+            'get',
+            $uri,
+            [
+                'payment_type' => $orderPayDto->getPaymentType(),
+                'creator_id'   => $orderPayDto->getCreatorId(),
+            ]
+        );
+
+        $responseContent = $response->getBody()->__toString();
+        $responseArray   = json_decode($responseContent, true);
+
+        $isPossible  = $responseArray['metadata']['is_possible'];
+        $extraCredit = $responseArray['metadata']['extra_credit'];
+
+        return new CheckOrderPaymentResult($isPossible, $extraCredit);
     }
 
 
