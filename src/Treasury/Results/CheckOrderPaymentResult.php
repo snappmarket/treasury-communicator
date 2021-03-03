@@ -18,16 +18,16 @@ class CheckOrderPaymentResult
 
 
 
-    public function getExtraCredit(): int
+    public function isPossible(): bool
     {
-        return $this->extraCredit;
+        return $this->isPossible;
     }
 
 
 
-    public function setExtraCredit(int $extraCredit): void
+    public function getExtraCredit(): int
     {
-        $this->extraCredit = $extraCredit;
+        return $this->extraCredit;
     }
 
 
