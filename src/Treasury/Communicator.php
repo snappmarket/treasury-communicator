@@ -120,8 +120,9 @@ class Communicator extends BasicCommunicator
             'get',
             $uri,
             [
-                'payment_type' => $orderPayDto->getPaymentType(),
-                'creator_id'   => $orderPayDto->getCreatorId(),
+                'payment_type'             => $orderPayDto->getPaymentType(),
+                'creator_id'               => $orderPayDto->getCreatorId(),
+                'unapplied_discount_value' => $orderPayDto->getUnnappliedPaymentType(),
             ]
         );
 
