@@ -13,6 +13,7 @@ use SnappMarket\Treasury\Dto\OrderCancelCreditReservationDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
 use SnappMarket\Treasury\Dto\OrderCashBackDto;
 use SnappMarket\Treasury\Dto\OrderPayDto;
+use SnappMarket\Treasury\Dto\OrderRamaUpdateDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
@@ -46,6 +47,20 @@ class Communicator extends BasicCommunicator
              'old_delivery_fee'   => $orderUpdateDto->getOldDeliveryFee(),
              'old_products_price' => $orderUpdateDto->getOldProductsPrice(),
              'old_voucher_price'  => $orderUpdateDto->getOldVoucherPrice(),
+        ]);
+
+        return $response->getStatusCode() == 200;
+    }
+
+
+
+    public function storeOrderRamaUpdate(OrderRamaUpdateDto $orderUpdateDto): bool
+    {
+        $uri = 'api/v1/orders/' . $orderUpdateDto->getOrderId() . '/rama-updates';
+
+        $response = $this->request(static::METHOD_POST, $uri, [
+            'creator_id'         => $orderUpdateDto->getCreatorId(),
+            'old_products_price' => $orderUpdateDto->getOldProductsPrice(),
         ]);
 
         return $response->getStatusCode() == 200;
