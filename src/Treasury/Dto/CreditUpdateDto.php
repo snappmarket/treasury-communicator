@@ -26,6 +26,9 @@ class CreditUpdateDto
     /** @var string */
     private $comment;
 
+    /** @var string|null */
+    private $description;
+
     /**
      * @return int
      */
@@ -104,5 +107,21 @@ class CreditUpdateDto
     public function setComment($comment)
     {
         $this->comment = $comment;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }
