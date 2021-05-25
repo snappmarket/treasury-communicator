@@ -44,6 +44,9 @@ class TransactionListDto
     /** @var string|null */
     private $comment;
 
+    /** @var string|null */
+    private $description;
+
     /**
      * @return int|null
      */
@@ -218,5 +221,21 @@ class TransactionListDto
     public function setInvoiceId($invoiceId)
     {
         $this->invoiceId = $invoiceId;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param null|string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }

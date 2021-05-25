@@ -89,6 +89,7 @@ class Communicator extends BasicCommunicator
              'delta_value' => $creditUpdateDto->getDeltaValue(),
              'wallet_type' => $creditUpdateDto->getWalletType(),
              'comment'     => $creditUpdateDto->getComment(),
+             'description' => $creditUpdateDto->getDescription(),
         ]);
         return $response->getStatusCode() == 200;
     }
@@ -210,6 +211,7 @@ class Communicator extends BasicCommunicator
             'invoice_id' => $transactionListDto->getInvoiceId() ?: "",
             'support_agent_phone' => $transactionListDto->getSupportAgentPhone() ?: "",
             'comment' => $transactionListDto->getComment() ?: "",
+            'description' => $transactionListDto->getDescription() ?: "",
         ]);
 
         $responseContent = $response->getBody()->__toString();
