@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pooria
- * Date: 4/27/20
- * Time: 5:29 PM
- */
 
 namespace SnappMarket\Treasury\Dto;
-
 
 class CreditPayBackDto
 {
@@ -20,51 +13,46 @@ class CreditPayBackDto
     /** @var int */
     private $value;
 
-    /**
-     * @return int
-     */
-    public function getUserId()
+    /** @var int */
+    private $paymentInfoId;
+
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @param int $userId
-     */
-    public function setUserId($userId)
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
     }
 
-    /**
-     * @return int
-     */
-    public function getCreatorId()
+    public function getCreatorId(): int
     {
         return $this->creatorId;
     }
 
-    /**
-     * @param int $creatorId
-     */
-    public function setCreatorId($creatorId)
+    public function setCreatorId(int $creatorId): void
     {
         $this->creatorId = $creatorId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
 
-    /**
-     * @param int $value
-     */
-    public function setValue($value)
+    public function setValue(int $value): void
     {
         $this->value = $value;
+    }
+
+    public function getPaymentInfoId(): int
+    {
+        return $this->paymentInfoId;
+    }
+
+    public function setPaymentInfoId(int $paymentInfoId): void
+    {
+        $this->paymentInfoId = $paymentInfoId;
     }
 }
