@@ -16,14 +16,13 @@ use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderRamaUpdateDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
+use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
 use SnappMarket\Treasury\Results\CheckOrderPaymentResult;
 
 class Communicator extends BasicCommunicator
 {
     const SECURITY_TOKEN_HEADER = 'Service-Security';
-
-
 
     public function __construct(
          string $baseUri,
@@ -35,8 +34,6 @@ class Communicator extends BasicCommunicator
 
         parent::__construct($baseUri, $headers, $logger);
     }
-
-
 
     public function storeOrderUpdate(OrderUpdateDto $orderUpdateDto)
     {
@@ -52,8 +49,6 @@ class Communicator extends BasicCommunicator
         return $response->getStatusCode() == 200;
     }
 
-
-
     public function storeOrderRamaUpdate(OrderRamaUpdateDto $orderUpdateDto): bool
     {
         $uri = 'api/v1/orders/' . $orderUpdateDto->getOrderId() . '/rama-updates';
@@ -66,8 +61,6 @@ class Communicator extends BasicCommunicator
         return $response->getStatusCode() == 200;
     }
 
-
-
     public function storeOrderCancel(OrderCancelDto $orderCancelDto)
     {
         $uri = 'api/v1/orders/' . $orderCancelDto->getOrderId() . '/cancel';
@@ -78,8 +71,6 @@ class Communicator extends BasicCommunicator
 
         return $response->getStatusCode() == 200;
     }
-
-
 
     public function storeCreditUpdate(CreditUpdateDto $creditUpdateDto)
     {
@@ -93,8 +84,6 @@ class Communicator extends BasicCommunicator
         ]);
         return $response->getStatusCode() == 200;
     }
-
-
 
     public function storeCreditIncrease(CreditIncreaseDto $creditIncreaseDto)
     {
@@ -112,6 +101,7 @@ class Communicator extends BasicCommunicator
         $response = $this->request(static::METHOD_POST, $uri, [
             'value' => $creditPayBackDto->getValue(),
             'creator_id' => $creditPayBackDto->getCreatorId(),
+            'payment_info_id' => $creditPayBackDto->getPaymentInfoId(),
         ]);
         return $response->getStatusCode() == 200;
     }
@@ -119,15 +109,13 @@ class Communicator extends BasicCommunicator
     public function storeOrderPayment(OrderPayDto $orderPayDto): bool
     {
         $uri      = "api/v1/orders/{$orderPayDto->getOrderId()}/payments/{$orderPayDto->getPaymentId()}";
-        $response = $this->request('put', $uri, [
+        $response = $this->request(static::METHOD_PUT, $uri, [
              'payment_type' => $orderPayDto->getPaymentType(),
              'creator_id'   => $orderPayDto->getCreatorId(),
         ]);
 
         return $response->getStatusCode() == 200;
     }
-
-
 
     public function checkOrderPayment(CheckOrderPaymentDto $orderPayDto): CheckOrderPaymentResult
     {
@@ -151,8 +139,6 @@ class Communicator extends BasicCommunicator
         return new CheckOrderPaymentResult($isPossible, $extraCredit);
     }
 
-
-
     public function reserveCreditForOrder(OrderReserveCreditDto $reserveCreditDto): int
     {
         $uri      = 'api/v1/orders/' . $reserveCreditDto->getOrderId() . '/credit-reservations';
@@ -166,8 +152,6 @@ class Communicator extends BasicCommunicator
 
         return $responseArray['metadata']['reserved_amount'];
     }
-
-
 
     public function cancelCreditReservationForOrder(OrderCancelCreditReservationDto $cancelCreditReservationDto): int
     {
@@ -244,5 +228,18 @@ class Communicator extends BasicCommunicator
         $responseArray = json_decode($responseContent, true);
 
         return $responseArray;
+    }
+
+    public function storePaymentInfoUpdate(PaymentInfoUpdateDto $paymentInfoUpdateDto): bool
+    {
+        $uri      = "api/v1/credit/payment-info-update";
+        $response = $this->request(static::METHOD_POST, $uri, [
+             'payment_info_id' => $paymentInfoUpdateDto->getPaymentInfoId,
+             'creator_id'   => $paymentInfoUpdateDto->getCreatorId(),
+             'value' => $paymentInfoUpdateDto->getValue(),
+             'action' => $paymentInfoUpdateDto->getAction(),
+        ]);
+
+        return $response->getStatusCode() == 200;
     }
 }
