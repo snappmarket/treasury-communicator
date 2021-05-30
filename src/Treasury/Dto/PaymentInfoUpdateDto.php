@@ -9,8 +9,8 @@ class PaymentInfoUpdateDto
     const ACTION_PAID = 'paid';
     const ACTION_CANCELLED = 'cancel';
     const ACCEPTABLE_ACTIONS = [
-        static::ACTION_PAID,
-        static::ACTION_CANCELLED,
+        self::ACTION_PAID,
+        self::ACTION_CANCELLED,
     ];
 
     /** @var int */
@@ -57,7 +57,7 @@ class PaymentInfoUpdateDto
 
     public function setAction(string $action): void
     {
-        if (!in_array($action, static::ACCEPTABLE_ACTIONS)) {
+        if (!in_array($action, self::ACCEPTABLE_ACTIONS)) {
             throw new Exception("Action is not valid.");
         }
         $this->action = $action;
