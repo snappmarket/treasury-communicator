@@ -234,7 +234,7 @@ class Communicator extends BasicCommunicator
     {
         $uri      = "api/v1/credit/payment-info-update";
         $response = $this->request(static::METHOD_POST, $uri, [
-             'payment_info_id' => $paymentInfoUpdateDto->getPaymentInfoId,
+             'payment_info_id' => $paymentInfoUpdateDto->getPaymentInfoId(),
              'creator_id'   => $paymentInfoUpdateDto->getCreatorId(),
              'value' => $paymentInfoUpdateDto->getValue(),
              'action' => $paymentInfoUpdateDto->getAction(),
