@@ -15,6 +15,7 @@ use SnappMarket\Treasury\Dto\OrderCashBackDto;
 use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderRamaUpdateDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
+use SnappMarket\Treasury\Dto\OrderRestoreDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
@@ -238,6 +239,16 @@ class Communicator extends BasicCommunicator
              'creator_id'   => $paymentInfoUpdateDto->getCreatorId(),
              'value' => $paymentInfoUpdateDto->getValue(),
              'action' => $paymentInfoUpdateDto->getAction(),
+        ]);
+
+        return $response->getStatusCode() == 200;
+    }
+
+    public function restoreOrder(OrderRestoreDto $orderRestoreDto): bool
+    {
+        $uri      = "api/v1/orders/{$orderRestoreDto->getOrderId()}/restore";
+        $response = $this->request(static::METHOD_POST, $uri, [
+             'creator_id' => $orderRestoreDto->getCreatorId(),
         ]);
 
         return $response->getStatusCode() == 200;
