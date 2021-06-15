@@ -82,6 +82,7 @@ class Communicator extends BasicCommunicator
              'wallet_type' => $creditUpdateDto->getWalletType(),
              'comment'     => $creditUpdateDto->getComment(),
              'description' => $creditUpdateDto->getDescription(),
+             'support_order_id' => $creditUpdateDto->getSupportOrderId(),
         ]);
         return $response->getStatusCode() == 200;
     }
@@ -197,6 +198,7 @@ class Communicator extends BasicCommunicator
             'support_agent_phone' => $transactionListDto->getSupportAgentPhone() ?: "",
             'comment' => $transactionListDto->getComment() ?: "",
             'description' => $transactionListDto->getDescription() ?: "",
+            'support_order_id' => $transactionListDto->getSupportOrderId() ?: "",
         ]);
 
         $responseContent = $response->getBody()->__toString();

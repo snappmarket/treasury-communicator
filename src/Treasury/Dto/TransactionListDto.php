@@ -47,6 +47,9 @@ class TransactionListDto
     /** @var string|null */
     private $description;
 
+    /** @var int|null */
+    private $supportOrderId;
+
     /**
      * @return int|null
      */
@@ -237,5 +240,15 @@ class TransactionListDto
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getSupportOrderId(): ?int
+    {
+        return $this->supportOrderId;
+    }
+
+    public function setSupportOrderId(?int $supportOrderId): void
+    {
+        $this->supportOrderId = $supportOrderId;
     }
 }
