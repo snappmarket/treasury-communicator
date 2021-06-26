@@ -124,7 +124,7 @@ class Communicator extends BasicCommunicator
     {
         $uri      = "api/v1/orders/{$orderPayDto->getOrderId()}/payments/{$orderPayDto->getPaymentId()}/possibility";
         $response = $this->request(
-            'get',
+            static::METHOD_GET,
             $uri,
             [
                 'payment_type'             => $orderPayDto->getPaymentType(),
@@ -148,7 +148,7 @@ class Communicator extends BasicCommunicator
         try {
             $uri      = "api/v1/orders/{$orderRestorePossibilityDto->getOrderId()}/restore-possibility";
             $response = $this->request(
-                'get',
+                static::METHOD_GET,
                 $uri
             );
     
