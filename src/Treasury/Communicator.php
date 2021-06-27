@@ -3,6 +3,7 @@
 
 namespace SnappMarket\Treasury;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 use SnappMarket\Communicator\Communicator as BasicCommunicator;
 use SnappMarket\Treasury\Dto\CheckOrderPaymentDto;
@@ -20,6 +21,7 @@ use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
 use SnappMarket\Treasury\Results\CheckOrderPaymentResult;
+use SnappMarket\Treasury\Dto\OrderRestorePossibilityDto;
 
 class Communicator extends BasicCommunicator
 {
@@ -122,7 +124,7 @@ class Communicator extends BasicCommunicator
     {
         $uri      = "api/v1/orders/{$orderPayDto->getOrderId()}/payments/{$orderPayDto->getPaymentId()}/possibility";
         $response = $this->request(
-            'get',
+            static::METHOD_GET,
             $uri,
             [
                 'payment_type'             => $orderPayDto->getPaymentType(),
@@ -138,6 +140,25 @@ class Communicator extends BasicCommunicator
         $extraCredit = $responseArray['metadata']['extra_credit'];
 
         return new CheckOrderPaymentResult($isPossible, $extraCredit);
+    }
+
+
+    public function checkRestoreOrderPayment(OrderRestorePossibilityDto $orderRestorePossibilityDto): bool
+    {
+        try {
+            $uri      = "api/v1/orders/{$orderRestorePossibilityDto->getOrderId()}/restore-possibility";
+            $response = $this->request(
+                static::METHOD_GET,
+                $uri
+            );
+    
+            $responseContent = $response->getBody()->__toString();
+            $responseArray   = json_decode($responseContent, true);
+    
+            return $responseArray['metadata']['is_possible'];
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     public function reserveCreditForOrder(OrderReserveCreditDto $reserveCreditDto): int
