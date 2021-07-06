@@ -84,6 +84,7 @@ class Communicator extends BasicCommunicator
              'wallet_type' => $creditUpdateDto->getWalletType(),
              'comment'     => $creditUpdateDto->getComment(),
              'description' => $creditUpdateDto->getDescription(),
+             'references_order_id' => $creditUpdateDto->getReferencesOrderId()
         ]);
         return $response->getStatusCode() == 200;
     }
@@ -151,10 +152,10 @@ class Communicator extends BasicCommunicator
                 static::METHOD_GET,
                 $uri
             );
-    
+
             $responseContent = $response->getBody()->__toString();
             $responseArray   = json_decode($responseContent, true);
-    
+
             return $responseArray['metadata']['is_possible'];
         } catch (Exception $e) {
             return false;
