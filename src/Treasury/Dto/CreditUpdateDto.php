@@ -29,6 +29,9 @@ class CreditUpdateDto
     /** @var string|null */
     private $description;
 
+    /** @var int|null */
+    private $referencesOrderId;
+
     /**
      * @return int
      */
@@ -123,5 +126,15 @@ class CreditUpdateDto
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getReferencesOrderId(): ?int
+    {
+        return $this->referencesOrderId;
+    }
+
+    public function setReferencesOrderId(?int $referencesOrderId): void
+    {
+        $this->referencesOrderId = $referencesOrderId;
     }
 }
