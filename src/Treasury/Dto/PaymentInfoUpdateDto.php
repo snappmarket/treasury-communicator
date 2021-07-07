@@ -19,9 +19,6 @@ class PaymentInfoUpdateDto
     /** @var int */
     private $creatorId;
 
-    /** @var int */
-    private $value;
-
     /** @var string */
     private $action;
 
@@ -43,16 +40,6 @@ class PaymentInfoUpdateDto
     public function setCreatorId(int $creatorId): void
     {
         $this->creatorId = $creatorId;
-    }
-
-    public function getValue(): int
-    {
-        return $this->value;
-    }
-
-    public function setValue(int $value): void
-    {
-        $this->value = $value;
     }
 
     public function setAction(string $action): void
