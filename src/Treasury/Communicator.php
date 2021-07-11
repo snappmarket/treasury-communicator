@@ -259,7 +259,6 @@ class Communicator extends BasicCommunicator
         $response = $this->request(static::METHOD_POST, $uri, [
              'payment_info_id' => $paymentInfoUpdateDto->getPaymentInfoId(),
              'creator_id'   => $paymentInfoUpdateDto->getCreatorId(),
-             'value' => $paymentInfoUpdateDto->getValue(),
              'action' => $paymentInfoUpdateDto->getAction(),
         ]);
 
