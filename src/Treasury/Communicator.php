@@ -150,7 +150,11 @@ class Communicator extends BasicCommunicator
             $uri      = "api/v1/orders/{$orderRestorePossibilityDto->getOrderId()}/restore-possibility";
             $response = $this->request(
                 static::METHOD_GET,
-                $uri
+                $uri,
+                [
+                    'voucher_value' => $orderRestorePossibilityDto->getVoucherValue(),
+                    'giftcard_value' => $orderRestorePossibilityDto->getGiftCardValue(),
+                ]
             );
 
             $responseContent = $response->getBody()->__toString();
