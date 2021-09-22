@@ -10,6 +10,9 @@ class OrderRestoreDto
     /** @var int */
     private $creatorId;
 
+    /** @var float */
+    private $giftCardValue;
+
     public function setOrderId(int $value): OrderRestoreDto
     {
         $this->orderId = $value;
@@ -31,5 +34,16 @@ class OrderRestoreDto
     public function getCreatorId(): int
     {
         return $this->creatorId;
+    }
+
+    public function setGiftCardValue(float $giftCardValue): OrderRestoreDto
+    {
+        $this->giftCardValue = $giftCardValue;
+        return $this;
+    }
+
+    public function getGiftCardValue(): float
+    {
+        return $this->giftCardValue;
     }
 }

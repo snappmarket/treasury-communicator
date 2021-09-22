@@ -274,6 +274,7 @@ class Communicator extends BasicCommunicator
         $uri      = "api/v1/orders/{$orderRestoreDto->getOrderId()}/restore";
         $response = $this->request(static::METHOD_POST, $uri, [
              'creator_id' => $orderRestoreDto->getCreatorId(),
+             'giftcard_value' => $orderRestoreDto->getGiftCardValue(),
         ]);
 
         return $response->getStatusCode() == 200;
