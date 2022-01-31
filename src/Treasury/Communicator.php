@@ -22,6 +22,9 @@ use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
 use SnappMarket\Treasury\Results\CheckOrderPaymentResult;
 use SnappMarket\Treasury\Dto\OrderRestorePossibilityDto;
+use SnappMarket\Treasury\Dto\OrderReturnDto;
+use SnappMarket\Treasury\Dto\TreasuryInternalServerErrorException;
+use SnappMarket\Treasury\Dto\TreasuryUnprocessableEntityException;
 
 class Communicator extends BasicCommunicator
 {
@@ -278,5 +281,24 @@ class Communicator extends BasicCommunicator
         ]);
 
         return $response->getStatusCode() == 200;
+    }
+
+    public function storeOrderReturn(OrderReturnDto $orderReturnDto): bool
+    {
+        try {
+            $uri = 'api/v1/orders/' . $orderReturnDto->getOrderId() . '/return';
+
+            $response = $this->request(static::METHOD_POST, $uri, [
+                 'creator_id' => $orderReturnDto->getCreatorId(),
+            ]);
+    
+            return $response->getStatusCode() == 200;
+        } catch (Exception $e) {
+            $responseContent = $response->getBody()->__toString();
+            if ($response->getStatusCode() == 422) {
+                throw new TreasuryUnprocessableEntityException($responseContent);
+            }
+            throw new TreasuryInternalServerErrorException($responseContent);
+        }
     }
 }
