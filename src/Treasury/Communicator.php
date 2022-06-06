@@ -23,8 +23,8 @@ use SnappMarket\Treasury\Dto\TransactionListDto;
 use SnappMarket\Treasury\Results\CheckOrderPaymentResult;
 use SnappMarket\Treasury\Dto\OrderRestorePossibilityDto;
 use SnappMarket\Treasury\Dto\OrderReturnDto;
-use SnappMarket\Treasury\Dto\TreasuryInternalServerErrorException;
-use SnappMarket\Treasury\Dto\TreasuryUnprocessableEntityException;
+use SnappMarket\Treasury\Exception\TreasuryInternalServerErrorException;
+use SnappMarket\Treasury\Exception\TreasuryUnprocessableEntityException;
 
 class Communicator extends BasicCommunicator
 {
@@ -299,6 +299,44 @@ class Communicator extends BasicCommunicator
                 throw new TreasuryUnprocessableEntityException($responseContent);
             }
             throw new TreasuryInternalServerErrorException($responseContent);
+        }
+    }
+
+    public function userFullRefund(int $userId): array {
+        try {
+            $uri = 'api/v1/user/' . $userId . '/full-refund';
+
+            $response = $this->request(static::METHOD_GET, $uri);
+            $responseContent = $response->getBody()->__toString();
+            $responseArray = json_decode($responseContent, true);
+    
+            return $responseArray;
+        } catch (Exception $e) {
+            $responseContent = $response->getBody()->__toString();
+            if ($response->getStatusCode() == 422) {
+                throw new TreasuryUnprocessableEntityException($responseContent);
+            }
+            throw new TreasuryInternalServerErrorException($e->getMessage());
+        }
+    }
+
+    public function calculateRefundValue(array $orderIds): array {
+        try {
+            $uri = 'api/v1/orders/calculate-refund';
+
+            $response = $this->request(static::METHOD_GET, $uri, [
+                'orders'    => $orderIds,
+            ]);
+            $responseContent = $response->getBody()->__toString();
+            $responseArray = json_decode($responseContent, true);
+    
+            return $responseArray;
+        } catch (Exception $e) {
+            $responseContent = $response->getBody()->__toString();
+            if ($response->getStatusCode() == 422) {
+                throw new TreasuryUnprocessableEntityException($responseContent);
+            }
+            throw new TreasuryInternalServerErrorException($e->getMessage());
         }
     }
 }
