@@ -1,12 +1,9 @@
 <?php
 
-
 namespace SnappMarket\Treasury\Dto;
-
 
 class OrderRevertSnappCreditDto
 {
-
     /** @var int */
     private $orderId;
 
@@ -16,8 +13,6 @@ class OrderRevertSnappCreditDto
     /** @var string */
     private $paymentType;
 
-
-
     public function setOrderId(int $value)
     {
         $this->orderId = $value;
@@ -25,14 +20,10 @@ class OrderRevertSnappCreditDto
         return $this;
     }
 
-
-
     public function getOrderId()
     {
         return $this->orderId;
     }
-
-
 
     public function setCreatorId(int $value)
     {
@@ -41,26 +32,8 @@ class OrderRevertSnappCreditDto
         return $this;
     }
 
-
-
     public function getCreatorId()
     {
         return $this->creatorId;
-    }
-
-
-
-    public function setPaymentType(string $value)
-    {
-        $this->paymentType = $value;
-
-        return $this;
-    }
-
-
-
-    public function getPaymentType()
-    {
-        return $this->paymentType;
     }
 }
