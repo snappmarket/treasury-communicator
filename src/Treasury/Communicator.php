@@ -17,6 +17,7 @@ use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderRamaUpdateDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderRestoreDto;
+use SnappMarket\Treasury\Dto\OrderRevertSnappCreditDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
@@ -338,5 +339,16 @@ class Communicator extends BasicCommunicator
             }
             throw new TreasuryInternalServerErrorException($e->getMessage());
         }
+    }
+
+    public function storeOrderRevertForSnappPay(OrderRevertSnappCreditDto $orderRevertDto)
+    {
+        $uri = 'api/v1/orders/' . $orderRevertDto->getOrderId() . '/revert-snapppay-credit';
+
+        $response = $this->request(static::METHOD_POST, $uri, [
+            'creator_id' => $orderRevertDto->getCreatorId(),
+        ]);
+
+        return $response->getStatusCode() == 200;
     }
 }
