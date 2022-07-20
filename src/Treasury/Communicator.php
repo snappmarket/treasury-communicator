@@ -18,7 +18,7 @@ use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderRamaUpdateDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderRestoreDto;
-use SnappMarket\Treasury\Dto\CancelSnappCreditReservationForOrder;
+use SnappMarket\Treasury\Dto\CancelSnappCreditReservationForOrderDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
@@ -353,7 +353,7 @@ class Communicator extends BasicCommunicator
         return $response->getStatusCode() == 200;
     }
 
-    public function storeCancelSnappCreditReservationForOrder(CancelSnappCreditReservationForOrder $dto): bool
+    public function storeCancelSnappCreditReservationForOrder(CancelSnappCreditReservationForOrderDto $dto): bool
     {
         $uri = 'api/v1/orders/' . $dto->getOrderId() . '/cancel-snappcredit-reservation';
 
