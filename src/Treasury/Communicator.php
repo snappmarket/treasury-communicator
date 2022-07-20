@@ -10,6 +10,7 @@ use SnappMarket\Treasury\Dto\CheckOrderPaymentDto;
 use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditPayBackDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
+use SnappMarket\Treasury\Dto\IncreaseWithSnappPayDto;
 use SnappMarket\Treasury\Dto\OrderCancelCreditReservationDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
 use SnappMarket\Treasury\Dto\OrderCashBackDto;
@@ -347,6 +348,17 @@ class Communicator extends BasicCommunicator
 
         $response = $this->request(static::METHOD_POST, $uri, [
             'creator_id' => $orderRevertDto->getCreatorId(),
+        ]);
+
+        return $response->getStatusCode() == 200;
+    }
+
+    public function storeIncreaseWithSnappPay(IncreaseWithSnappPayDto $increaseDto)
+    {
+        $uri = 'api/v1/orders/' . $increaseDto->getOrderId() . '/increase-with-snapppay';
+
+        $response = $this->request(static::METHOD_POST, $uri, [
+            'creator_id' => $increaseDto->getCreatorId(),
         ]);
 
         return $response->getStatusCode() == 200;
