@@ -10,7 +10,7 @@ use SnappMarket\Treasury\Dto\CheckOrderPaymentDto;
 use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditPayBackDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
-use SnappMarket\Treasury\Dto\IncreaseWithSnappPayDto;
+use SnappMarket\Treasury\Dto\ReserveSnappCreditForOrderDto;
 use SnappMarket\Treasury\Dto\OrderCancelCreditReservationDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
 use SnappMarket\Treasury\Dto\OrderCashBackDto;
@@ -18,7 +18,7 @@ use SnappMarket\Treasury\Dto\OrderPayDto;
 use SnappMarket\Treasury\Dto\OrderRamaUpdateDto;
 use SnappMarket\Treasury\Dto\OrderReserveCreditDto;
 use SnappMarket\Treasury\Dto\OrderRestoreDto;
-use SnappMarket\Treasury\Dto\OrderRevertSnappPayDto;
+use SnappMarket\Treasury\Dto\CancelSnappCreditReservationForOrder;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
@@ -342,23 +342,23 @@ class Communicator extends BasicCommunicator
         }
     }
 
-    public function storeOrderRevertForSnappPay(OrderRevertSnappPayDto $orderRevertDto)
+    public function storeReserveSnappCreditForOrder(ReserveSnappCreditForOrderDto $dto): bool
     {
-        $uri = 'api/v1/orders/' . $orderRevertDto->getOrderId() . '/revert-snapppay-credit';
+        $uri = 'api/v1/orders/' . $dto->getOrderId() . '/reserve-snappcredit';
 
         $response = $this->request(static::METHOD_POST, $uri, [
-            'creator_id' => $orderRevertDto->getCreatorId(),
+            'creator_id' => $dto->getCreatorId(),
         ]);
 
         return $response->getStatusCode() == 200;
     }
 
-    public function storeIncreaseWithSnappPay(IncreaseWithSnappPayDto $increaseDto)
+    public function storeCancelSnappCreditReservationForOrder(CancelSnappCreditReservationForOrder $dto): bool
     {
-        $uri = 'api/v1/orders/' . $increaseDto->getOrderId() . '/increase-with-snapppay';
+        $uri = 'api/v1/orders/' . $dto->getOrderId() . '/cancel-snappcredit-reservation';
 
         $response = $this->request(static::METHOD_POST, $uri, [
-            'creator_id' => $increaseDto->getCreatorId(),
+            'creator_id' => $dto->getCreatorId(),
         ]);
 
         return $response->getStatusCode() == 200;

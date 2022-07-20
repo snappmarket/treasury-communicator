@@ -2,7 +2,7 @@
 
 namespace SnappMarket\Treasury\Dto;
 
-class OrderRevertSnappPayDto
+class CancelSnappCreditReservationForOrder
 {
     /** @var int */
     private $orderId;

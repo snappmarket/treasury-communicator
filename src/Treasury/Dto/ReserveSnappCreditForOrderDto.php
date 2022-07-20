@@ -2,7 +2,7 @@
 
 namespace SnappMarket\Treasury\Dto;
 
-class IncreaseWithSnappPayDto
+class ReserveSnappCreditForOrderDto
 {
     /** @var int */
     private $orderId;
