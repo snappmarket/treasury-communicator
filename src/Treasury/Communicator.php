@@ -322,12 +322,13 @@ class Communicator extends BasicCommunicator
         }
     }
 
-    public function calculateRefundValue(array $orderIds): array {
+    public function calculateRefundValue(int $userId, array $orderIds): array {
         try {
             $uri = 'api/v1/orders/calculate-refund';
 
             $response = $this->request(static::METHOD_GET, $uri, [
                 'orders'    => $orderIds,
+                'user_id'   => $userId,
             ]);
             $responseContent = $response->getBody()->__toString();
             $responseArray = json_decode($responseContent, true);
