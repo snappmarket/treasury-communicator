@@ -23,6 +23,7 @@ use SnappMarket\Treasury\Dto\CancelSnappCreditReservationForOrderDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
+use SnappMarket\Treasury\Dto\UpdateSnappCreditAmountForOrderDto;
 use SnappMarket\Treasury\Results\CheckOrderPaymentResult;
 use SnappMarket\Treasury\Dto\OrderRestorePossibilityDto;
 use SnappMarket\Treasury\Dto\OrderReturnDto;
@@ -361,6 +362,18 @@ class Communicator extends BasicCommunicator
 
         $response = $this->request(static::METHOD_POST, $uri, [
             'creator_id' => $dto->getCreatorId(),
+        ]);
+
+        return $response->getStatusCode() == 200;
+    }
+
+    public function updateSnappCreditAmountForOrder(UpdateSnappCreditAmountForOrderDto $dto): bool
+    {
+        $uri = 'api/v1/orders/' . $dto->getOrderId() . '/update-snappcredit-amount';
+
+        $response = $this->request(static::METHOD_POST, $uri, [
+            'creator_id' => $dto->getCreatorId(),
+            'amount' => $dto->getAmount()
         ]);
 
         return $response->getStatusCode() == 200;
