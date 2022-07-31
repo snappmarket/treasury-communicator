@@ -10,6 +10,7 @@ use SnappMarket\Treasury\Dto\CheckOrderPaymentDto;
 use SnappMarket\Treasury\Dto\CreditIncreaseDto;
 use SnappMarket\Treasury\Dto\CreditPayBackDto;
 use SnappMarket\Treasury\Dto\CreditUpdateDto;
+use SnappMarket\Treasury\Dto\GetAlreadyRefundedAmountForOrderDto;
 use SnappMarket\Treasury\Dto\ReserveSnappCreditForOrderDto;
 use SnappMarket\Treasury\Dto\OrderCancelCreditReservationDto;
 use SnappMarket\Treasury\Dto\OrderCancelDto;
@@ -363,5 +364,24 @@ class Communicator extends BasicCommunicator
         ]);
 
         return $response->getStatusCode() == 200;
+    }
+
+    public function getAlreadyRefundedAmountForOrder(GetAlreadyRefundedAmountForOrderDto $dto)
+    {
+        $uri = 'api/v1/orders/' . $dto->getOrderId() . '/already-refunded-amount';
+
+        $response = $this->request(static::METHOD_GET, $uri);
+
+        if ($response->getStatusCode() == 200){
+            $data = json_decode($response->getBody()->getContents(), true);
+
+            if(empty($data)){
+                return false;
+            }
+
+            return $data['results']['already_refunded_amount'] ?? false;
+        }
+
+        return false;
     }
 }

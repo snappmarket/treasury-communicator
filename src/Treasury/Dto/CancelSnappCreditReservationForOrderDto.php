@@ -10,9 +10,6 @@ class CancelSnappCreditReservationForOrderDto
     /** @var int */
     private $creatorId;
 
-    /** @var string */
-    private $paymentType;
-
     public function setOrderId(int $value)
     {
         $this->orderId = $value;
