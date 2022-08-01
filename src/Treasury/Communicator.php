@@ -372,8 +372,7 @@ class Communicator extends BasicCommunicator
         $uri = 'api/v1/orders/' . $dto->getOrderId() . '/update-snappcredit-amount';
 
         $response = $this->request(static::METHOD_POST, $uri, [
-            'creator_id' => $dto->getCreatorId(),
-            'amount' => $dto->getAmount()
+            'creator_id' => $dto->getCreatorId()
         ]);
 
         return $response->getStatusCode() == 200;
