@@ -391,7 +391,7 @@ class Communicator extends BasicCommunicator
                 return false;
             }
 
-            return $data->results->already_refunded_amount ?? false;
+            return $data['results']['already_refunded_amount'] ?? false;
         }
 
         return false;
