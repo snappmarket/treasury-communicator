@@ -385,13 +385,10 @@ class Communicator extends BasicCommunicator
         $response = $this->request(static::METHOD_GET, $uri);
 
         if ($response->getStatusCode() == 200){
-            $data = json_decode($response->getBody()->getContents(), true);
+            $responseContent = $response->getBody()->__toString();
+            $responseArray = json_decode($responseContent, true);
 
-            if(empty($data)){
-                return false;
-            }
-
-            return $data['results']['already_refunded_amount'] ?? false;
+            return $responseArray['results']['already_refunded_amount'] ?? false;
         }
 
         return false;
