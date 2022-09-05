@@ -397,7 +397,7 @@ class Communicator extends BasicCommunicator
 
     public function storeUserDebt(StoreUserDebtDto $dto): bool
     {
-        $uri = 'api/v1/orders/user-debt/' . $dto->getPaymentId();
+        $uri = 'api/v1/orders/user-debt/payment/' . $dto->getPaymentId();
 
         $response = $this->request(static::METHOD_POST, $uri, [
             'creator_id' => $dto->getCreatorId(),
