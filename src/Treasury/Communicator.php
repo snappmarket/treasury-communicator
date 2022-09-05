@@ -22,6 +22,7 @@ use SnappMarket\Treasury\Dto\OrderRestoreDto;
 use SnappMarket\Treasury\Dto\CancelSnappCreditReservationForOrderDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
+use SnappMarket\Treasury\Dto\StoreUserDebtDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
 use SnappMarket\Treasury\Dto\UpdateSnappCreditAmountForOrderDto;
 use SnappMarket\Treasury\Results\CheckOrderPaymentResult;
@@ -392,5 +393,16 @@ class Communicator extends BasicCommunicator
         }
 
         return false;
+    }
+
+    public function storeUserDebt(StoreUserDebtDto $dto): bool
+    {
+        $uri = 'api/v1/orders/user-debt/' . $dto->getPaymentId();
+
+        $response = $this->request(static::METHOD_POST, $uri, [
+            'creator_id' => $dto->getCreatorId(),
+        ]);
+
+        return $response->getStatusCode() == 200;
     }
 }
