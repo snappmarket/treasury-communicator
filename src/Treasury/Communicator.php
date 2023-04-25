@@ -374,7 +374,8 @@ class Communicator extends BasicCommunicator
         $uri = 'api/v1/orders/' . $dto->getOrderId() . '/return-cancel-amount-to-snappcredit';
 
         $response = $this->request(static::METHOD_POST, $uri, [
-            'creator_id' => $dto->getCreatorId()
+            'creator_id' => $dto->getCreatorId(),
+            'value' => $dto->getValue()
         ]);
 
         return $response->getStatusCode() == 200;
