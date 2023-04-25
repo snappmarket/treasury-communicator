@@ -369,33 +369,6 @@ class Communicator extends BasicCommunicator
         return $response->getStatusCode() == 200;
     }
 
-    public function updateSnappCreditAmountForOrder(UpdateSnappCreditAmountForOrderDto $dto): bool
-    {
-        $uri = 'api/v1/orders/' . $dto->getOrderId() . '/update-snappcredit-amount';
-
-        $response = $this->request(static::METHOD_POST, $uri, [
-            'creator_id' => $dto->getCreatorId()
-        ]);
-
-        return $response->getStatusCode() == 200;
-    }
-
-    public function getAlreadyRefundedAmountForOrder(GetAlreadyRefundedAmountForOrderDto $dto)
-    {
-        $uri = 'api/v1/orders/' . $dto->getOrderId() . '/already-refunded-amount';
-
-        $response = $this->request(static::METHOD_GET, $uri);
-
-        if ($response->getStatusCode() == 200){
-            $responseContent = $response->getBody()->__toString();
-            $responseArray = json_decode($responseContent, true);
-
-            return $responseArray['results']['already_refunded_amount'] ?? false;
-        }
-
-        return false;
-    }
-
     public function returnCancelAmountToSnappCredit(ReturnCancelAmountToSnappCredit $dto): bool
     {
         $uri = 'api/v1/orders/' . $dto->getOrderId() . '/return-cancel-amount-to-snappcredit';

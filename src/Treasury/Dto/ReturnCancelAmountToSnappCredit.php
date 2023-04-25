@@ -10,10 +10,12 @@ class ReturnCancelAmountToSnappCredit
     /** @var int */
     private $creatorId;
 
+    /** @var int */
+    private $value;
+
     public function setOrderId(int $value)
     {
         $this->orderId = $value;
-
         return $this;
     }
 
@@ -22,15 +24,25 @@ class ReturnCancelAmountToSnappCredit
         return $this->orderId;
     }
 
-    public function setCreatorId(int $value)
+    public function setCreatorId(int $creatorId)
     {
-        $this->creatorId = $value;
-
+        $this->creatorId = $creatorId;
         return $this;
     }
 
     public function getCreatorId()
     {
         return $this->creatorId;
+    }
+
+    public function setValue(int $value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
     }
 }
