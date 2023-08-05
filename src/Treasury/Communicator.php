@@ -24,6 +24,7 @@ use SnappMarket\Treasury\Dto\CancelSnappCreditReservationForOrderDto;
 use SnappMarket\Treasury\Dto\OrderUpdateDto;
 use SnappMarket\Treasury\Dto\PaymentInfoUpdateDto;
 use SnappMarket\Treasury\Dto\ReturnCancelAmountToSnappCredit;
+use SnappMarket\Treasury\Dto\ReturnedInstallmentAmountDto;
 use SnappMarket\Treasury\Dto\ReturnSnappPayInstallmentAmountDto;
 use SnappMarket\Treasury\Dto\StoreUserDebtDto;
 use SnappMarket\Treasury\Dto\TransactionListDto;
@@ -434,5 +435,20 @@ class Communicator extends BasicCommunicator
         ]);
 
         return $response->getStatusCode() == 200;
+    }
+
+    public function getReturnedInstallmentAmount(ReturnedInstallmentAmountDto $dto)
+    {
+        $uri = 'api/v1/orders/' . $dto->getOrderId() . '/returned-installment-amount';
+        $response = $this->request(static::METHOD_GET, $uri);
+
+        if ($response->getStatusCode() == 200){
+            $responseContent = $response->getBody()->__toString();
+            $responseArray = json_decode($responseContent, true);
+
+            return $responseArray['results']['returned_amount'] ?? false;
+        }
+
+        return false;
     }
 }
