@@ -46,7 +46,11 @@ class Communicator extends BasicCommunicator
     ) {
         $headers[static::SECURITY_TOKEN_HEADER] = $securityToken;
 
-        parent::__construct($baseUri, $headers, $logger);
+        parent::__construct($baseUri, $headers, $logger, [
+            'connect_timeout' => 5,
+            'read_timeout' => 5,
+            'timeout' => 5,
+        ]);
     }
 
     public function storeOrderUpdate(OrderUpdateDto $orderUpdateDto)
